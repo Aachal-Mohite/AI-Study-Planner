@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Smart Study Planner</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f3f6fb;
+    padding:40px;
+}
+.container{
+    background:white;
+    padding:30px;
+    max-width:800px;
+    margin:auto;
+    border-radius:10px;
+    box-shadow:0 0 10px #ddd;
+}
+h1{color:#333;}
+input,select{
+    width:100%;
+    padding:10px;
+    margin:5px 0 15px 0;
+}
+button{
+    background:#2d7ff9;
+    color:white;
+    padding:12px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+.result{
+    background:#e9f7ef;
+    padding:15px;
+    border-radius:6px;
+    margin-top:20px;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+th,td{
+    border:1px solid #ddd;
+    padding:8px;
+    text-align:center;
+}
+th{background:#f2f2f2;}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>📊 AI Smart Study Planner</h1>
+
+<form method="POST">
+<label>GPA</label>
+<select name="gpa" required>
+  {% for i in range(1,11) %}
+    <option value="{{i}}">{{i}}</option>
+  {% endfor %}
+</select>
+
+<label>Study Hours per Week</label>
+<select name="study_hours" required>
+  <option value="5">5</option>
+  <option value="10">10</option>
+  <option value="15">15</option>
+  <option value="20">20</option>
+  <option value="25">25</option>
+  <option value="30">30</option>
+</select>
+
+<label>Absence Percentage (50% - 100%)</label>
+<select name="absences" required>
+  {% for i in range(50,101,5) %}
+    <option value="{{i}}">{{i}}%</option>
+  {% endfor %}
+</select>
+
+<label>Taking Tutoring?</label>
+<select name="tutoring">
+  <option value="0">No</option>
+  <option value="1">Yes</option>
+</select>
+
+<label>Parental Support Level</label>
+<select name="support">
+  <option value="0">0 - None</option>
+  <option value="1">1 - Low</option>
+  <option value="2">2 - Medium</option>
+  <option value="3">3 - Good</option>
+  <option value="4">4 - Strong</option>
+  <option value="5">5 - Very Strong</option>
+</select>
+
+
+<button type="submit">Generate Smart Study Plan</button>
+</form>
+
+{% if prediction %}
+<div class="result">
+<h3>Prediction: {{ prediction }}</h3>
+
+<h4>Suggested Plan</h4>
+<ul>
+{% for p in plan %}
+<li>{{ p }}</li>
+{% endfor %}
+</ul>
+
+<h4>Suggested Timetable</h4>
+<table>
+<tr><th>Time</th><th>Activity</th></tr>
+{% for t in timetable %}
+<tr>
+<td>{{ t[0] }}</td>
+<td>{{ t[1] }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endif %}
+
+</div>
+</body>
+</html>
